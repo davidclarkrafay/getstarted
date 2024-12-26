@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "dc-bucket"
+    bucket = "dc-rafay-bucket"
     key    = "terraform.tfstate"
     region = "us-west-2"
   }
