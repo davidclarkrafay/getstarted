@@ -1,5 +1,5 @@
 module "rafay_cluster" {
-  source = "./"
+  source = "./modules/rafay_cluster/"
   for_each = var.clusters
   cluster_name = each.value["cluster_name"]
   project_name      = each.value["project_name"]
