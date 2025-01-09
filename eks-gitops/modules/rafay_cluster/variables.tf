@@ -10,3 +10,6 @@ variable "cluster_spec_version" {
 variable "cluster_spec_path" {
   default = "demo"
 }
+variable "waitflag" {
+  default = "1"
+}
