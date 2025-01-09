@@ -2,7 +2,7 @@ apiVersion: infra.k8smgmt.io/v3
 kind: Cluster
 metadata:
   # The name of the cluster
-  name: gitops-eks-cluster2
+  name: eks-gitops-cluster
   # The name of the project the cluster will be created in
   project: defaultproject
 spec:
@@ -49,7 +49,7 @@ spec:
       name: managed-ng1
     metadata:
       # The name of the cluster
-      name: gitops-eks-cluster2
+      name: eks-gitops-cluster
       # The AWS region the cluster will be created in
       region: us-west-2
       # The tags that will be applied to the AWS cluster resources
