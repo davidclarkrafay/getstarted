@@ -4,4 +4,5 @@ resource "rafay_eks_cluster_spec" "cluster" {
   yamlfilepath = var.cluster_spec_path
   yamlfileversion = var.cluster_spec_version
   waitflag = "1"
+  checkdiff = false
 }
