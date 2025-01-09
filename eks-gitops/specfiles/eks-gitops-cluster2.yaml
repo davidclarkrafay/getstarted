@@ -4,7 +4,7 @@ metadata:
   # The name of the cluster
   name: eks-gitops-cluster2
   # The name of the project the cluster will be created in
-  project: defaultproject
+  project: david-clark-demo-project
 spec:
   blueprintConfig:
     # The name of the blueprint the cluster will use
