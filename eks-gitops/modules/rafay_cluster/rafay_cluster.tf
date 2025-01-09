@@ -4,5 +4,5 @@ resource "rafay_eks_cluster_spec" "eks-gitops-cluster2" {
   yamlfilepath = var.cluster_spec_path
   yamlfileversion = var.cluster_spec_version
   waitflag = "1"
-  checkdiff = false
+  checkdiff = true
 }
