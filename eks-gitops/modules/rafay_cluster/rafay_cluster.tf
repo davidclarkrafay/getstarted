@@ -1,4 +1,5 @@
 resource "rafay_eks_cluster" "eks-cluster-1" {
+  allow_overwrite = true
   cluster {
     kind = "Cluster"
     metadata {
