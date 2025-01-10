@@ -1,37 +1,101 @@
+apiVersion: infra.k8smgmt.io/v3
 kind: Cluster
 metadata:
-  labels:
-    env: dev
-    type: eks-workloads
+  # The name of the cluster
   name: eks-gitops-cluster2
+  # The name of the project the cluster will be created in
   project: david-clark-demo-project
 spec:
-  type: eks
-  blueprint: default
-  cloudprovider: hardik-eks-role
+  blueprintConfig:
+    # The name of the blueprint the cluster will use
+    name: aws-ingress
+    # The version of the blueprint the cluster will use
+    version: v2 
+  # The name of the cloud credential that will be used to create the cluster   
   cloudCredentials: david-clark-aws-key
----
-apiVersion: rafay.io/v1alpha5
-kind: ClusterConfig
-metadata:
-  name: eks-gitops-cluster2
-  region: us-west-2
-  version: "1.31"
-  tags:
-    demo: "true"
-nodeGroups:
-  - name: nodegroup-1
-    instanceType: t3.xlarge
-    desiredCapacity: 2
-    volumeType: gp3
-    volumeSize: 50
-    privateNetworking: true
-    volumeEncrypted: true
-    volumeKmsKeyID: f12c2166-21dc-418f-881a-f95c28dbce22
-    #amiFamily: Ubuntu2004
+  config:
+    # The EKS addons that will be applied to the cluster
+    addons:
+    - name: kube-proxy
+      version: latest
+    - name: vpc-cni
+      version: latest
+    - name: coredns
+      version: latest
     iam:
-      #withAddonPolicies:
-        # albIngress: true
-        # autoScaler: true
-        # imageBuilder: true
-        # efs: true
+      # Enables the IAM OIDC provider as well as IRSA for the Amazon CNI plugin
+      withOIDC: true  
+    managedNodeGroups:
+      # The AWS AMI family type the nodes will use
+    - amiFamily: AmazonLinux2
+      # The desired number of nodes that can run in the node group  
+      desiredCapacity: 2
+      # The AWS EC2 instance type that will be used for the nodes
+      instanceType: t3.large
+      # The maximum number of nodes that can run in the node group
+      maxSize: 2
+      # The minimum number of nodes that can run in the node group
+      minSize: 1
+      # The name of the node group that will be created in AWS
+      name: ng-1
+      volumeSize: 80
+      volumeType: gp3
+    metadata:
+      # The name of the cluster
+      name: demo-eks-testing
+      # The AWS region the cluster will be created in
+      region: us-west-2
+      # The tags that will be applied to the AWS cluster resources
+      tags:
+        email: user@rafay.co
+        env: qa
+      # The Kubernetes version that will be installed on the cluster   
+      version:  latest
+    vpc:
+      # AutoAllocateIPV6 requests an IPv6 CIDR block with /56 prefix for the VPC
+      autoAllocateIPv6: false
+      clusterEndpoints:
+        # Enables private access to the Kubernetes API server endpoints
+        privateAccess: true
+        # Enables public access to the Kubernetes API server endpoints
+        publicAccess: true
+      # The CIDR that will be used  by the cluster VPC  
+      cidr: 192.168.0.0/16
+  type: aws-eks
+
+# kind: Cluster
+# metadata:
+#   labels:
+#     env: dev
+#     type: eks-workloads
+#   name: eks-gitops-cluster2
+#   project: david-clark-demo-project
+# spec:
+#   type: eks
+#   blueprint: default
+#   cloudprovider: hardik-eks-role
+#   cloudCredentials: david-clark-aws-key
+# ---
+# apiVersion: rafay.io/v1alpha5
+# kind: ClusterConfig
+# metadata:
+#   name: eks-gitops-cluster2
+#   region: us-west-2
+#   version: "1.31"
+#   tags:
+#     demo: "true"
+# nodeGroups:
+#   - name: nodegroup-1
+#     instanceType: t3.xlarge
+#     desiredCapacity: 2
+#     volumeType: gp3
+#     volumeSize: 50
+#     privateNetworking: true
+#     #amiFamily: Ubuntu2004
+#     iam:
+#       withOIDC: true 
+#       #withAddonPolicies:
+#         # albIngress: true
+#         # autoScaler: true
+#         # imageBuilder: true
+#         # efs: true
