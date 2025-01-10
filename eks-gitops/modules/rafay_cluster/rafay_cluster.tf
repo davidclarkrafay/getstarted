@@ -36,6 +36,7 @@ resource "rafay_eks_cluster" "eks-cluster-1" {
       }
     }
     node_groups {
+      disable_pods_imds = false
       name       = "ng-1"
       ami_family = "AmazonLinux2"
       iam {
@@ -49,6 +50,10 @@ resource "rafay_eks_cluster" "eks-cluster-1" {
       volume_size      = 80
       volume_type      = "gp3"
       private_networking = true
+      volume_throughput = 125
+      efa_enabled = false
+      volume_iops = 3000
+      disable_imdsv1 = false
     }
     addons {
       name = "vpc-cni"
