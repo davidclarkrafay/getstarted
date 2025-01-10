@@ -40,10 +40,6 @@ resource "rafay_eks_cluster" "eks-cluster-1" {
       name       = "ng-1"
       ami_family = "AmazonLinux2"
       iam {
-        iam_node_group_with_addon_policies {
-          image_builder = true
-          auto_scaler   = true
-        }
       }
       instance_type    = "m5.xlarge"
       desired_capacity = 1
@@ -69,4 +65,4 @@ resource "rafay_eks_cluster" "eks-cluster-1" {
       version = "latest"
     }
   }
-}
+
