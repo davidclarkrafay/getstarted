@@ -1,6 +1,5 @@
 resource "rafay_eks_cluster" "eks-cluster-1" {
-  allow_overwrite = true
-  cluster {
+    cluster {
     kind = "Cluster"
     metadata {
       name    = "eks-cluster-1"
@@ -12,7 +11,7 @@ resource "rafay_eks_cluster" "eks-cluster-1" {
       blueprint_version = "latest"
       cloud_provider = "eks-role"
       cni_provider   = "aws-cni"
-      proxy_config   = {}
+      #proxy_config   = {}
     }
   }
   cluster_config {
