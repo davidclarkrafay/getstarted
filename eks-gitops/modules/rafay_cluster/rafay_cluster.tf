@@ -24,7 +24,6 @@ resource "rafay_eks_cluster" "eks-cluster-1" {
     }
     iam {
       with_oidc = true
-      }
     }
     vpc {
       cidr = "192.168.0.0/16"
@@ -65,4 +64,4 @@ resource "rafay_eks_cluster" "eks-cluster-1" {
       version = "latest"
     }
   }
-
+}
